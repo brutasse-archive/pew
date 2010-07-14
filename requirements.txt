@@ -1,0 +1,2 @@
+oauth2==1.2.0
+configobj==4.7.2
