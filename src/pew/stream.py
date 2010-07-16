@@ -1,5 +1,4 @@
 import asyncore
-import base64
 import re
 import socket
 import time
