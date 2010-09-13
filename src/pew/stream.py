@@ -1,6 +1,8 @@
 import asyncore
 import re
+import select
 import socket
+import ssl
 import time
 
 from htmlentitydefs import name2codepoint
@@ -23,7 +25,7 @@ def get_auth_header(consumer, token):
     }
 
     req = oauth.Request(method="GET",
-                        url="http://chirpstream.twitter.com/2b/user.json",
+                        url="https://betastream.twitter.com/2b/user.json",
                         parameters=oparams)
 
     signature_method = oauth.SignatureMethod_HMAC_SHA1()
@@ -121,7 +123,26 @@ class StreamClient(asyncore.dispatcher):
     def __init__(self, host, headers):
         asyncore.dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.connect((host, 80))
+        self.connect((host, 443))
+        while True:
+            try:
+                self.socket.getpeername()
+                break
+            except socket.error:
+                pass
+        self.set_socket(ssl.wrap_socket(self.socket,
+                                        do_handshake_on_connect=False))
+        while True:
+            try:
+                self.socket.do_handshake()
+                break
+            except ssl.SSLError as err:
+                if err.args[0] == ssl.SSL_ERROR_WANT_READ:
+                    select.select([self.socket], [], [])
+                elif err.args[0] == ssl.SSL_ERROR_WANT_WRITE:
+                    select.select([], [self.socket], [])
+                else:
+                    raise
         self.buffer = '\r\n'.join(headers) + '\r\n\r\n'
         self.data = ''
 
@@ -244,7 +265,7 @@ def main(config):
 
     consumer = oauth.Consumer(key=config['consumer_key'],
                               secret=config['consumer_secret'])
-    host = 'chirpstream.twitter.com'
+    host = 'betastream.twitter.com'
 
     headers = [
         'GET /2b/user.json HTTP/1.1',
