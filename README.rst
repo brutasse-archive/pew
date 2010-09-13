@@ -1,7 +1,7 @@
 Pew
 ===
 
-An experiment with Twitter's UserStreams.
+A read-only, real-time command-line Twitter client.
 
 Disclaimer
 ----------
@@ -12,16 +12,18 @@ Do not package this app for end users, the intended audience is limited to
 
 See `ChirpUserStreams`_ and `Implementation Suggestions`_ for more information.
 
-.. _ChirpUserStreams: http://apiwiki.twitter.com/ChirpUserStreams
-.. _Implementation Suggestions: http://apiwiki.twitter.com/User-Stream-Implementation-Suggestions
+.. _ChirpUserStreams: http://dev.twitter.com/pages/user_streams
+.. _Implementation Suggestions: http://dev.twitter.com/pages/user_streams_suggestions
 
 Usage
 -----
 
 * ``mkvirtualenv pew && easy_install pip && pip install -r requirements.txt``
 * Register an app on https://twitter.com/apps/new
-* Get a token for it (if you don't know how to do it, don't use this project)
+* Get a token for it using `this script`_ for instance
 * Put in ``~/.pewrc``:
+
+.. _this script: http://gist.github.com/545143
 
   ::
 
