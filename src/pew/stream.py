@@ -25,7 +25,7 @@ def get_auth_header(consumer, token):
     }
 
     req = oauth.Request(method="GET",
-                        url="https://betastream.twitter.com/2b/user.json",
+                        url="https://userstream.twitter.com/2/user.json",
                         parameters=oparams)
 
     signature_method = oauth.SignatureMethod_HMAC_SHA1()
@@ -265,10 +265,10 @@ def main(config):
 
     consumer = oauth.Consumer(key=config['consumer_key'],
                               secret=config['consumer_secret'])
-    host = 'betastream.twitter.com'
+    host = 'userstream.twitter.com'
 
     headers = [
-        'GET /2b/user.json HTTP/1.1',
+        'GET /2/user.json HTTP/1.1',
         'Host: %s' % host,
         get_auth_header(consumer, token),
     ]
@@ -278,11 +278,8 @@ def main(config):
 
 
 def client(config):
-    while True:
-        try:
-            main(config)
-        except KeyboardInterrupt:
-            print "Bye!"
-            return
-        except:
-            pass
+    try:
+        main(config)
+    except KeyboardInterrupt:
+        print "Bye!"
+        return

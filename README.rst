@@ -3,18 +3,6 @@ Pew
 
 A read-only, real-time command-line Twitter client.
 
-Disclaimer
-----------
-
-The UserStream API is still in beta, and is not ready for released products.
-Do not package this app for end users, the intended audience is limited to
-[python] developers.
-
-See `ChirpUserStreams`_ and `Implementation Suggestions`_ for more information.
-
-.. _ChirpUserStreams: http://dev.twitter.com/pages/user_streams
-.. _Implementation Suggestions: http://dev.twitter.com/pages/user_streams_suggestions
-
 Usage
 -----
 
@@ -34,3 +22,4 @@ Usage
       token_key = your token key
 
 * Run ``python src/pew/main.py``
+* Profit
